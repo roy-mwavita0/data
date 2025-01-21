@@ -1,0 +1,170 @@
+---
+title: "Roy Mwavita - Monitoring and Evaluation Officer"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## About Me
+
+**Roy Lennic Mwavita**\
+**📞** +254 794 395 145\
+**✉️** lennicroy\@gmail.com\
+**🌐 LinkedIn:** [linkedin.com/in/roy-mwavita-495b50220](https://linkedin.com/in/roy-mwavita-495b50220)
+
+With a foundation in sociology and proficiency in monitoring and evaluation, Roy Mwavita has a curiosity for understanding social phenomena and leveraging data-driven insights for positive change.
+
+He is a monitoring and Evaluation (M&E) professional with over 2 years of experience in donor-funded programs, including OVC, PMTCT, and community health projects.
+
+Proven expertise in designing and implementing MEAL frameworks, conducting Data Quality Assessments (DQA), and utilizing tools like R, ODK, and KoboToolbox for data management.
+
+Adept at ensuring accountability, fostering learning, and driving evidence-based decision-making through impactful data visualization and analysis.
+
+Skilled in stakeholder engagement, capacity building, and compliance with donor requirements to enhance program effectiveness and sustainability.
+
+## Core Competencies & Skills
+
+-   **Monitoring & Evaluation (M&E)**: MEAL framework design, impact evaluations, and program monitoring.
+-   **Data Management**: Expertise in R, Excel, ODK, KoboToolbox, and CPIMS for data collection, analysis, and reporting.
+-   **Data Quality Assurance (DQA)**: Conducting DQA exercises to improve data accuracy and integrity.
+-   **Stakeholder Engagement**: Collaborating with partners, donors, and field teams to drive project success.
+-   **Reporting & Analysis**: Delivering high-quality, data-driven reports with visualizations for strategic decision-making.
+
+```{r skills, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(highcharter)
+
+# Data
+skills <- data.frame(
+  Skill = c("R", "ODK", "KoboToolbox", "Python", "Excel"),
+  Proficiency = c(80, 90, 90, 30, 90)
+)
+
+# Create the highcharter bar chart
+highchart() %>%
+  hc_chart(type = "bar") %>%
+  hc_title(text = "Skills Proficiency") %>%
+  hc_xAxis(categories = skills$Skill, title = list(text = "Skill")) %>%
+  hc_yAxis(
+    title = list(text = "Proficiency (%)"),
+    max = 100
+  ) %>%
+  hc_add_series(
+    name = "Proficiency",
+    data = skills$Proficiency,
+    colorByPoint = TRUE
+  ) %>%
+  hc_tooltip(pointFormat = "<b>{point.category}:</b> {point.y}%") %>%
+  hc_plotOptions(series = list(dataLabels = list(enabled = TRUE)))
+
+
+
+```
+
+## Professional Experience
+
+```{r experience_chart, echo=FALSE, message=FALSE, warning=FALSE}
+library(highcharter)
+library(dplyr)
+
+# Prepare data for highcharter
+experience <- data.frame(
+  Role = c("Monitoring & Evaluation Officer", "Data Assistant", "Volunteer Social Worker",
+           "Enumerator", "Social Worker Trainee", "Polling Clerk", "Croupier"),
+  Start = as.Date(c("2023-05-01", "2023-03-01", "2022-02-01",
+                    "2019-08-01", "2019-05-01", "2017-08-01", "2015-12-01")),
+  End = as.Date(c("2024-01-01", "2023-04-01", "2023-02-01",
+                  "2019-08-31", "2019-08-31", "2017-08-31", "2016-09-30"))
+)
+
+# Convert data to a list for highcharter timeline
+hc_data <- experience %>%
+  arrange(desc(Start)) %>%
+  mutate(
+    name = Role,
+    start = as.numeric(as.POSIXct(Start)) * 1000,  # Convert to milliseconds
+    end = as.numeric(as.POSIXct(End)) * 1000,      # Convert to milliseconds
+    description = paste("<b>Role:</b>", Role,
+                        "<br><b>Start:</b>", Start,
+                        "<br><b>End:</b>", End)
+  )
+
+# Create timeline chart
+highchart() %>%
+  hc_chart(type = "xrange") %>%  # Use xrange for timeline-like visuals
+  hc_title(text = "Professional Experience Timeline") %>%
+  hc_xAxis(type = "datetime", title = list(text = "Date")) %>%
+  hc_yAxis(categories = experience$Role, reversed = TRUE, title = list(text = "Role")) %>%
+  hc_add_series(
+    name = "Roles",
+    data = list_parse(
+      hc_data %>%
+        mutate(x = start, x2 = end, y = row_number() - 1) %>%  # y corresponds to roles' positions
+        select(x, x2, y, description)
+    ),
+    type = "xrange",
+    dataLabels = list(enabled = TRUE, format = "{point.name}")
+  ) %>%
+  hc_tooltip(useHTML = TRUE, pointFormat = "{point.description}")
+
+```
+
+## Education Background
+
+| Degree/Certification | Institution | Location | Dates |
+|-----------------------|-----------------|-----------------|-----------------|
+| Certification in Monitoring & Evaluation | Kenya Institute of Management | Virtual | July 2024 – November 2024 |
+| Bachelor of Arts in Sociology | Pwani University | Kilifi, Kenya | September 2016 – June 2021 |
+
+## Certifications
+
+```{r certifications, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+
+# Data for certifications
+certifications <- data.frame(
+  Certification = c(
+    "Humanitarian Needs Assessment (KoboToolbox)",
+    "Data Analysis Essentials (Microsoft & LinkedIn)",
+    "Project Management Essentials (Microsoft & LinkedIn)"
+  ),
+  Date = c("June 2024", "June 2024", "June 2024")
+)
+
+# Generate table
+kable(certifications, 
+      col.names = c("Certification", "Date"))
+
+```
+
+## Projects and Achievements
+
+### 1. Preventive Analyzer Dashboard
+
+The **Preventive Analyzer Dashboard**, which I created, enables team members to upload raw reports and automatically gain insights into the progress of preventive, evidence-based interventions. This dashboard specifically focuses on tracking the progress of **Sinovuyo** and **Coaching Boys Into Men (CBIM)** programs, providing key performance metrics that support data-driven decisions and program improvements
+
+![](preventive_analyzer.png)
+
+### 2. OVC Comprehensive Gaps Analyzer Dashboard
+
+The **OVC Comprehensive Gaps Analyzer Dashboard**, which I developed, allows team members to upload registration lists and automatically identify key gaps in data. This includes detecting issues such as overage and duplicated birth certificates, helping the team to ensure data accuracy and completeness.
+
+![](comprehensive_analyzer.png)
+
+### 3. Epidemic Control Dashboard
+
+The **Epidemic Control Dashboard**, which I designed, provides real-time insights into the viral cascade and the efforts towards achieving the UNAIDS tripped 95 agenda. It allows the team to track and monitor critical data points, facilitating more informed decision-making in improving response strategies.
+
+![](epidemic.png)
+
+### 4. Performance Trends Dashboard
+
+The **Performance Trends Dashboard**, which I developed, provides detailed insights into key performance indicators, including the **Birth Certificate Trend** and **Case Plan Achievement Trend**. The **Birth Certificate Trend** tracks the progress of acquiring birth certificates over time, highlighting any gaps or areas needing attention. The **Case Plan Achievement Trend** allows the team to monitor the completion and effectiveness of case plans, ensuring that goals are being met and adjustments are made as necessary to improve outcomes.
+
+![](perfomance.png)
